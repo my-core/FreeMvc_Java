@@ -66,8 +66,8 @@ public class BaseDao extends JdbcDaoSupport implements IBaseDao {
                 sbValue.append("?");
                 params.add(ObjectHelper.getFieldValueByName(field, t));
             }
-            sql = String.format(sql, sbFiled, sbValue);
-            if (jdbcTemplate.update(sql, tableName, params.toArray()) > 0)
+            sql = String.format(sql, tableName, sbFiled, sbValue);
+            if (jdbcTemplate.update(sql, params.toArray()) > 0)
                 return true;
             else
                 return false;
@@ -106,11 +106,18 @@ public class BaseDao extends JdbcDaoSupport implements IBaseDao {
                 if (sbSet.length() > 0) {
                     sbSet.append(",");
                 }
-                if (field.toLowerCase() == primaryKey.toLowerCase()) {
-                    sbWhere.append(String.format("%s=?", primaryKey));
+                Object value = ObjectHelper.getFieldValueByName(field, t);
+                //为null则不更新
+                if (value == null || field.toLowerCase().equals("createtime") || field.toLowerCase().equals("createby")) {
+                    continue;
+                }
+                //主键作为更新条件
+                if (field.toLowerCase().equals(primaryKey.toLowerCase())) {
+                    primaryKey = field;
+                    sbWhere.append(String.format("%s=?", field));
                 } else {
                     sbSet.append(String.format("%s=?", field));
-                    params.add(ObjectHelper.getFieldValueByName(field, t));
+                    params.add(value);
                 }
             }
             params.add(ObjectHelper.getFieldValueByName(primaryKey, t));

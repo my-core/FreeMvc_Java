@@ -3,6 +3,7 @@ package com.myspringmvc.dao;
 import com.myspringmvc.contract.request.GetUserListRequest;
 import com.myspringmvc.contract.response.BaseResponse;
 import com.myspringmvc.contract.response.GetUserListResponse;
+import com.myspringmvc.model.PermissionModel;
 
 import java.util.List;
 
@@ -18,4 +19,17 @@ public interface IUserDao extends IBaseDao {
      * @return
      */
     List<GetUserListResponse> getUserList(GetUserListRequest request);
+
+    /**
+     * 获取权限
+     * @return
+     */
+     List<PermissionModel> getPermissionList();
+
+    /**
+     * 获取用户权限
+     * @param userID 用户ID
+     * @return
+     */
+    List<PermissionModel> getUserPermission(String userID);
 }

@@ -1,9 +1,11 @@
 package com.myspringmvc.dao.impl;
 
+import com.myspringmvc.common.Log4jHelper;
 import com.myspringmvc.contract.request.GetUserListRequest;
 import com.myspringmvc.contract.response.BaseResponse;
 import com.myspringmvc.contract.response.GetUserListResponse;
 import com.myspringmvc.dao.IUserDao;
+import com.myspringmvc.model.PermissionModel;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -34,13 +36,60 @@ public class UserDao extends BaseDao implements IUserDao {
             sb.append("where 1=1 ");
             String userName = request.getUserName();
             if (userName != null && userName.length() != 0) {
-                sb.append("UserName=?");
+                sb.append("UserName=? ");
                 params.add(userName);
             }
+            sb.append("order by a.CreateTime desc ");
             RowMapper<GetUserListResponse> rowMapper = BeanPropertyRowMapper.newInstance(GetUserListResponse.class);
             List<GetUserListResponse> list = (List<GetUserListResponse>) jdbcTemplate.query(sb.toString(), params.toArray(), rowMapper);
             return list;
         } catch (Exception ex) {
+            Log4jHelper.error(this.getClass().getName(), "getUserList", "", ex);
+            return null;
+        }
+    }
+
+    /**
+     * 获取权限
+     * @return
+     */
+    public  List<PermissionModel> getPermissionList() {
+        try {
+            //sql语句
+            StringBuffer sb = new StringBuffer();
+            //sql参数
+            List<Object> params = new ArrayList<Object>();
+            sb.append("select * from T_Permission order by Type, Sort ");
+            RowMapper<PermissionModel> rowMapper = BeanPropertyRowMapper.newInstance(PermissionModel.class);
+            List<PermissionModel> list = (List<PermissionModel>) jdbcTemplate.query(sb.toString(), params.toArray(), rowMapper);
+            return list;
+        } catch (Exception ex) {
+            Log4jHelper.error(this.getClass().getName(), "getPermissionList", "", ex);
+            return null;
+        }
+    }
+
+    /**
+     * 获取用户权限
+     * @param userID 用户ID
+     * @return
+     */
+    public  List<PermissionModel> getUserPermission(String userID) {
+        try {
+            //sql语句
+            StringBuffer sb = new StringBuffer();
+            //sql参数
+            List<Object> params = new ArrayList<Object>();
+            sb.append("select c.* from T_RolePermission a ");
+            sb.append("inner join T_User b on b.RoleID=a.RoleID ");
+            sb.append("inner join T_Permission c on c.ID=a.PermissionID ");
+            sb.append("where b.ID=? ");
+            params.add(userID);
+            RowMapper<PermissionModel> rowMapper = BeanPropertyRowMapper.newInstance(PermissionModel.class);
+            List<PermissionModel> list = (List<PermissionModel>) jdbcTemplate.query(sb.toString(), params.toArray(), rowMapper);
+            return list;
+        } catch (Exception ex) {
+            Log4jHelper.error(this.getClass().getName(), "getUserPermission", "", ex);
             return null;
         }
     }

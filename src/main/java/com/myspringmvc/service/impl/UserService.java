@@ -8,6 +8,7 @@ import com.myspringmvc.contract.response.BaseResponse;
 import com.myspringmvc.contract.response.GetUserListResponse;
 import com.myspringmvc.dao.IUserDao;
 import com.myspringmvc.dao.impl.UserDao;
+import com.myspringmvc.model.PermissionModel;
 import com.myspringmvc.model.UserModel;
 import com.myspringmvc.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,5 +78,22 @@ public class UserService extends BaseService implements IUserService {
             Log4jHelper.error(this.getClass().getName(), "", "", ex);
             return response;
         }
+    }
+
+    /**
+     * 获取权限
+     * @return
+     */
+    public  List<PermissionModel> getPermissionList(){
+        return userDao.getPermissionList();
+    }
+
+    /**
+     * 获取用户权限
+     * @param userID 用户ID
+     * @return
+     */
+    public  List<PermissionModel> getUserPermission(String userID){
+        return userDao.getUserPermission(userID);
     }
 }

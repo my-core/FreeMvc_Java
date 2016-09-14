@@ -1,12 +1,16 @@
 package com.myspringmvc.controller;
 
+import com.myspringmvc.common.Utils;
 import com.myspringmvc.contract.request.GetUserListRequest;
 import com.myspringmvc.contract.request.UserLoginRequest;
 import com.myspringmvc.contract.response.BaseResponse;
 import com.myspringmvc.contract.response.GetUserListResponse;
+import com.myspringmvc.model.PermissionModel;
+import com.myspringmvc.model.RoleModel;
 import com.myspringmvc.model.UserModel;
 import com.myspringmvc.ui.LoginUser;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -14,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -63,7 +68,7 @@ public class UserController extends BaseController {
     @RequestMapping(value = "/userList", method = RequestMethod.GET)
     public ModelAndView userList(GetUserListRequest request) {
         BaseResponse<List<GetUserListResponse>> response = getUserService().getUserList(request);
-        ModelAndView mv = new ModelAndView("userlist");
+        ModelAndView mv = new ModelAndView("userList");
         mv.addObject("userList", response.getReturnData());
         return mv;
     }
@@ -74,11 +79,11 @@ public class UserController extends BaseController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/userAdd", method = RequestMethod.GET)
-    public ModelAndView userAdd(String id) {
-
+    @RequestMapping(value = {"/userAdd/{id}"}, method = RequestMethod.GET)
+    public ModelAndView userAdd(@PathVariable("id") String id) {
+        UserModel model = getUserService().getModel(UserModel.class, "ID", id);
         ModelAndView mv = new ModelAndView("userAdd");
-        mv.addObject("user", null);
+        mv.addObject("user", model);
         return mv;
     }
     /**
@@ -88,9 +93,79 @@ public class UserController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/userAdd", method = RequestMethod.POST)
-    public ModelAndView userAdd(UserModel model) {
-        ModelAndView mv = new ModelAndView("userList");
+    public void userAdd(HttpServletRequest httpRequest, HttpServletResponse httpResponse,UserModel model) throws IOException {
+        if(model.getId()==null || model.getId().equals("")) {
+            model.setId(Utils.getUUID());
+            model.setCreateBy(LoginUser.getCurrentUser(httpRequest).getId());
+            model.setCreateTime(new Date());
+            getUserService().insert(model);
+        }
+        else {
+            getUserService().update(model);
+        }
+        httpResponse.sendRedirect("/user/userList");
+    }
+
+    /**
+     * 权限列表
+     *
+     * @return
+     */
+    @RequestMapping(value = "/permissionList", method = RequestMethod.GET)
+    public ModelAndView permissionList() {
+        List<PermissionModel> list = getUserService().getPermissionList();
+        for(PermissionModel item : list) {
+            if (item.getType() == 2) {
+                item.setName("|----" + item.getName());
+            } else if (item.getType() == 2) {
+                item.setName("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|----" + item.getName());
+            }
+        }
+        ModelAndView mv = new ModelAndView("permissionList");
+        mv.addObject("permissionList", list);
         return mv;
     }
 
+    /**
+     * 角色列表
+     *
+     * @return
+     */
+    @RequestMapping(value = "/roleList", method = RequestMethod.GET)
+    public ModelAndView roleList() {
+        List<RoleModel> list = getUserService().getList(RoleModel.class);
+        ModelAndView mv = new ModelAndView("roleList");
+        mv.addObject("roleList", list);
+        return mv;
+    }
+    /**
+     * 角色添加
+     *
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = {"/roleAdd/{id}"}, method = RequestMethod.GET)
+    public ModelAndView roleAdd(@PathVariable("id") String id) {
+        RoleModel model = getUserService().getModel(RoleModel.class, "ID", id);
+        ModelAndView mv = new ModelAndView("roleAdd");
+        mv.addObject("role", model);
+        return mv;
+    }
+    /**
+     * 角色添加
+     *
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/roleAdd", method = RequestMethod.POST)
+    public void roleAdd(HttpServletRequest httpRequest, HttpServletResponse httpResponse,RoleModel model) throws IOException {
+        if(model.getId()==null || model.getId().equals("")) {
+            model.setId(Utils.getUUID());
+            getUserService().insert(model);
+        }
+        else {
+            getUserService().update(model);
+        }
+        httpResponse.sendRedirect("/user/roleList");
+    }
 }

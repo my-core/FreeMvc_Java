@@ -11,6 +11,15 @@
 
 5、H+ui前端框架
 
+
+打开方式：
+
+1、下载解压，打开Idea->File->Open-选择Free_Mvc.iml，打开即可。
+
+2、选择Check out from Version Control，选择Git，复制地址，设置好项目路径，项目名称即可。
+
+
+
 相关随笔：
 
 （1）、Java SDK环境变量配置
@@ -28,3 +37,14 @@ http://note.youdao.com/noteshare?id=f803e59b7332c0c00f843c44b462e11f
 （4）、Maven的配置及使用Maven创建项目
 
 http://note.youdao.com/noteshare?id=dad97dcf18bcc4785a6958591c2cae67
+
+
+相关参考资料：
+
+
+http://jinnianshilongnian.iteye.com/category/231099
+
+http://logging.apache.org/log4j/1.2/manual.html
+
+https://my.oschina.net/gaussik/blog
+

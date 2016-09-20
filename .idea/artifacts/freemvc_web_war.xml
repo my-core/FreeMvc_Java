@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="freemvc-web:war">
+    <output-path>$PROJECT_DIR$/freemvc-web/target</output-path>
+    <root id="archive" name="com.freemvc.web.war">
+      <element id="artifact" artifact-name="freemvc-web:war exploded" />
+    </root>
+  </artifact>
+</component>

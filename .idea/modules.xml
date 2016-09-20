@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/freemvc.iml" filepath="$PROJECT_DIR$/freemvc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/freemvc-common/freemvc-common.iml" filepath="$PROJECT_DIR$/freemvc-common/freemvc-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/freemvc-dao/freemvc-dao.iml" filepath="$PROJECT_DIR$/freemvc-dao/freemvc-dao.iml" />
+      <module fileurl="file://$PROJECT_DIR$/freemvc-datacontract/freemvc-datacontract.iml" filepath="$PROJECT_DIR$/freemvc-datacontract/freemvc-datacontract.iml" />
+      <module fileurl="file://$PROJECT_DIR$/freemvc-model/freemvc-model.iml" filepath="$PROJECT_DIR$/freemvc-model/freemvc-model.iml" />
+      <module fileurl="file://$PROJECT_DIR$/freemvc-service/freemvc-service.iml" filepath="$PROJECT_DIR$/freemvc-service/freemvc-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/freemvc-web/freemvc-web.iml" filepath="$PROJECT_DIR$/freemvc-web/freemvc-web.iml" />
+    </modules>
+  </component>
+</project>

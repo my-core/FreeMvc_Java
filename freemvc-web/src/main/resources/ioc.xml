@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--通过@Resource注解来进行依赖注入-->
+    <!--如果@Resource注解不指bean名时，将会使用【属性名】扫描Spring管理的bean对象进行注入。
+        此项目不指定，使用默认属性名，故需要确保定义bean的id为属性名一致，否则无法注入-->
+
+    <!--基类-->
+    <bean id="baseDao" class="com.freemvc.dao.BaseDao">
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
+    </bean>
+    <bean id="baseService" class="com.freemvc.service.BaseService">
+    </bean>
+    <!--用户-->
+    <bean id="userDao" class="com.freemvc.dao.UserDao">
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
+    </bean>
+    <bean id="userService" class="com.freemvc.service.UserService">
+    </bean>
+</beans>

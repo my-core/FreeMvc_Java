@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+         http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         version="3.0">
+
+  <display-name>freemvc-webapi</display-name>
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>*</param-value>
+  </context-param>
+
+  <!--该servlet名为freemvc(名称可修改)-->
+  <servlet>
+    <servlet-name>webapi</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <!--启动容器时初始化该Servlet-->
+    <load-on-startup>1</load-on-startup>
+    <!--初始化Servlet的参数，如不配置此节点，则默认从WEB-INF下找freemvc-servlet.xml文件-->
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>classpath:webapi-servlet.xml, classpath:weiapi-ioc.xml</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>webapi</servlet-name>
+    <!--表示哪些请求交给Spring Web MVC处理,“/” 是用来定义默认servlet映射的。
+    也可以如“*.html”表示拦截所有以html为扩展名的请求。-->
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
+
+  <!--为了能够处理中文的post请求，再配置一个encodingFilter，以避免post请求中文出现乱码情况-->
+  <filter>
+    <filter-name>encodingFilter</filter-name>
+    <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+    <init-param>
+      <param-name>encoding</param-name>
+      <param-value>UTF-8</param-value>
+    </init-param>
+    <init-param>
+      <param-name>forceEncoding</param-name>
+      <param-value>true</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>encodingFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+</web-app>

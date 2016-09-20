@@ -14,7 +14,7 @@
 
 打开方式：
 
-1、下载解压，打开Idea->File->Open-选择Free_Mvc.iml，打开即可。
+1、下载解压，打开Idea->File->Open-选择freemvc.iml，打开即可。
 
 2、选择Check out from Version Control，选择Git，复制地址，设置好项目路径，项目名称即可。
 

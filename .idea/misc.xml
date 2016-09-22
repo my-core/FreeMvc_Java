@@ -5,6 +5,7 @@
   </component>
   <component name="FrameworkDetectionExcludesConfiguration">
     <file type="web" url="file://$PROJECT_DIR$/freemvc-web" />
+    <file type="web" url="file://$PROJECT_DIR$/freemvc-webapi" />
   </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">

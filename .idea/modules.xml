@@ -9,6 +9,7 @@
       <module fileurl="file://$PROJECT_DIR$/freemvc-model/freemvc-model.iml" filepath="$PROJECT_DIR$/freemvc-model/freemvc-model.iml" />
       <module fileurl="file://$PROJECT_DIR$/freemvc-service/freemvc-service.iml" filepath="$PROJECT_DIR$/freemvc-service/freemvc-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/freemvc-web/freemvc-web.iml" filepath="$PROJECT_DIR$/freemvc-web/freemvc-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/freemvc-webapi/freemvc-webapi.iml" filepath="$PROJECT_DIR$/freemvc-webapi/freemvc-webapi.iml" />
     </modules>
   </component>
 </project>

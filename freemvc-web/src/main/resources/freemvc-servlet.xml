@@ -16,8 +16,10 @@
     <context:component-scan base-package="com.freemvc.web.controller"/>
     <context:component-scan base-package="com.freemvc.service"/>
     <context:component-scan base-package="com.freemvc.dao"/>
-    <!--实现属性占位符（property placeholder）的配置,引入jdbc.properties文件-->
-    <context:property-placeholder location="classpath:jdbc.properties"/>
+    <context:component-scan base-package="com.freemvc.config"/>
+    <!--实现属性占位符（property placeholder）的配置,引入jdbc.properties文件。
+    下面setting节点使用spring管理了，这里可以注释不用-->
+    <!--<context:property-placeholder location="classpath:jdbc.properties"/>-->
     <!-- 静态资源(js、image等)的访问 -->
     <mvc:default-servlet-handler/>
     <!--开启注解 -->
@@ -94,7 +96,7 @@
             <bean class="com.freemvc.web.interceptor.LoginInterceptor"/>
         </mvc:interceptor>
         <!--使用bean定义Interceptor，直接定义在mvc:interceptors根下面的Interceptor将拦截所有的请求 -->
-        <!--bean class="com.myspringmvc.interceptor.AllInterceptor"/-->
+        <bean class="com.freemvc.web.interceptor.AllInterceptor"/>
     </mvc:interceptors>
 
     <!--ViewResolver 视图解析器。用于支持Servlet、JSP视图解析-->
@@ -107,4 +109,15 @@
         <property name="suffix" value=".jsp"/>
     </bean>
 
+    <!-- 使用注解注入properties中的值 -->
+    <bean id="setting" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="locations">
+            <list>
+                <value>classpath:*.properties</value>
+            </list>
+        </property>
+    </bean>
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer">
+        <property name="properties" ref="setting" />
+    </bean>
 </beans>

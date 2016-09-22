@@ -67,10 +67,7 @@ public class BaseDao extends JdbcDaoSupport implements IBaseDao {
                 params.add(ObjectHelper.getFieldValueByName(field, t));
             }
             sql = String.format(sql, tableName, sbFiled, sbValue);
-            if (jdbcTemplate.update(sql, params.toArray()) > 0)
-                return true;
-            else
-                return false;
+            return jdbcTemplate.update(sql, params.toArray()) > 0;
         } catch (Exception ex) {
             //to log something
             return false;
@@ -122,10 +119,7 @@ public class BaseDao extends JdbcDaoSupport implements IBaseDao {
             }
             params.add(ObjectHelper.getFieldValueByName(primaryKey, t));
             sql = String.format(sql, tableName, sbSet, sbWhere);
-            if (jdbcTemplate.update(sql, params.toArray()) > 0)
-                return true;
-            else
-                return false;
+            return jdbcTemplate.update(sql, params.toArray()) > 0;
         } catch (Exception ex) {
             //to log something
             return false;
@@ -174,10 +168,7 @@ public class BaseDao extends JdbcDaoSupport implements IBaseDao {
                 params.add(value);
             }
             sql = String.format(sql, tableName, sbWhere);
-            if (jdbcTemplate.update(sql, params.toArray()) > 0)
-                return true;
-            else
-                return false;
+            return jdbcTemplate.update(sql, params.toArray()) > 0;
         } catch (Exception ex) {
             //to log something
             return false;
@@ -248,7 +239,7 @@ public class BaseDao extends JdbcDaoSupport implements IBaseDao {
      */
     public <T> List<T> getList(Class<T> t,String columnName, Object value) {
         HashMap map = new HashMap();
-        if (columnName != null && columnName.length() != 0) {
+        if (columnName != null && columnName.length() > 0) {
             map.put(columnName, value);
         }
         return getList(t, map);
@@ -281,8 +272,6 @@ public class BaseDao extends JdbcDaoSupport implements IBaseDao {
             if (hs == null || hs.size() == 0) {
                 sbWhere.append("1=1");
             } else {
-
-
                 for (Object key : hs.keySet()) {
                     sbWhere.append(String.format("%s=?", key.toString()));
                     params.add(hs.get(key));
@@ -290,8 +279,7 @@ public class BaseDao extends JdbcDaoSupport implements IBaseDao {
             }
             sql = String.format(sql, tableName, sbWhere);
             RowMapper<T> rowMapper = BeanPropertyRowMapper.newInstance(t);
-            List<T> list = (List<T>) jdbcTemplate.query(sql, params.toArray(), rowMapper);
-            return list;
+            return (List<T>) jdbcTemplate.query(sql, params.toArray(), rowMapper);
         } catch (Exception ex) {
             Log4jHelper.error(this.getClass().getName(), "getList", "", ex);
             return null;

@@ -1,6 +1,9 @@
 package com.freemvc.web.interceptor;
 
+import com.freemvc.common.Log4jHelper;
 import com.freemvc.common.Utils;
+import com.freemvc.config.GlobalConfig;
+import org.json.JSONObject;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -14,31 +17,25 @@ import java.util.Date;
  */
 public class AllInterceptor extends HandlerInterceptorAdapter {
 
-    //不开启控制台日志输出
-    private boolean IsOpenLog = false;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        //控制台日志(方便验证拦截是否被执行)
-        if (IsOpenLog)
-            System.out.println(Utils.DateToString(new Date()) + ":LoginInterceptor preHandle");
-
+        if (GlobalConfig.isOpenLog)
+            Log4jHelper.info(request.getClass().toString(), request.getMethod(), JSONObject.valueToString(request.getParameterMap()));
         return super.preHandle(request, response, handler);
     }
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        //控制台日志(方便验证拦截是否被执行)
-        if (IsOpenLog)
-            System.out.println(Utils.DateToString(new Date()) + ":LoginInterceptor postHandle");
+        if (GlobalConfig.isOpenLog)
+            Log4jHelper.info(request.getClass().toString(), request.getMethod(), JSONObject.valueToString(request.getParameterMap()));
         super.postHandle(request, response, handler, modelAndView);
     }
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-        //控制台日志(方便验证拦截是否被执行)
-        if (IsOpenLog)
-            System.out.println(Utils.DateToString(new Date()) + ":LoginInterceptor afterCompletion");
+        if (GlobalConfig.isOpenLog)
+            Log4jHelper.info(request.getClass().toString(), request.getMethod(), JSONObject.valueToString(response.getOutputStream()));
         super.afterCompletion(request, response, handler, ex);
     }
 }

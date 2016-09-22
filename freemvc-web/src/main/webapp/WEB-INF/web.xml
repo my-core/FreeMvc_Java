@@ -5,14 +5,19 @@
          http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
          version="3.0">
 
-  <display-name>freemvc</display-name>
-  <!--该servlet名为myspringmvc(名称可修改)-->
+  <display-name>freemvc-web</display-name>
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>*</param-value>
+  </context-param>
+
+  <!--该servlet名为freemvc(名称可修改)-->
   <servlet>
     <servlet-name>freemvc</servlet-name>
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
     <!--启动容器时初始化该Servlet-->
     <load-on-startup>1</load-on-startup>
-    <!--初始化Servlet的参数，如不配置此节点，则默认从WEB-INF下找myspringmvc-servlet.xml文件-->
+    <!--初始化Servlet的参数，如不配置此节点，则默认从WEB-INF下找freemvc-servlet.xml文件-->
     <init-param>
       <param-name>contextConfigLocation</param-name>
       <param-value>classpath:freemvc-servlet.xml, classpath:ioc.xml</param-value>

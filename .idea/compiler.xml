@@ -28,9 +28,11 @@
         <module name="freemvc-model" />
         <module name="freemvc-service" />
         <module name="freemvc-web" />
+        <module name="freemvc-webapi" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="com.freemvc.webapi" target="1.5" />
       <module name="freemvc" target="1.5" />
       <module name="freemvc-common" target="1.5" />
       <module name="freemvc-dao" target="1.5" />
@@ -38,6 +40,7 @@
       <module name="freemvc-model" target="1.5" />
       <module name="freemvc-service" target="1.5" />
       <module name="freemvc-web" target="1.5" />
+      <module name="freemvc-webapi" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>

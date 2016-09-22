@@ -22,6 +22,7 @@
     <!--<context:property-placeholder location="classpath:jdbc.properties"/>-->
     <!-- 静态资源(js、image等)的访问 -->
     <mvc:default-servlet-handler/>
+    <!-- Enables swgger ui-->
     <!--开启注解 -->
     <mvc:annotation-driven/>
 

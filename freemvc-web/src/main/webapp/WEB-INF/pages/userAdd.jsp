@@ -72,7 +72,7 @@
                     <tr>
                         <th></th>
                         <td>
-                            <button type="submit" class="btn btn-primary">保 存</button>
+                            <button type="button" class="btn btn-primary" onclick="addUser()">保 存</button>
                             <a href="/user/userList" class="btn btn-success">返回列表</a>
                         </td>
                     </tr>
@@ -81,8 +81,9 @@
         </div>
     </form>
     <script>
+        var validator;
         $(function () {
-            $("#UserAdd").validate({
+            validator =  $("#UserAdd").validate({
                 rules: {
                     UserName: "required",
                     Password: {
@@ -113,6 +114,11 @@
                 }
             });
         });
+        function addUser() {
+            if (validator.form()) {
+                DoAjax('/user/roleAdd', $('#UserAdd').serialize());
+            }
+        }
     </script>
 </body>
 </html>

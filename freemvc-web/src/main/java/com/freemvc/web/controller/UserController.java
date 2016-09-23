@@ -6,13 +6,16 @@ import com.freemvc.datacontract.response.*;
 import com.freemvc.model.PermissionModel;
 import com.freemvc.model.RoleModel;
 import com.freemvc.model.UserModel;
+import com.freemvc.web.common.AjaxResult;
 import com.freemvc.web.common.LoginUser;
+import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.jws.WebParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -92,16 +95,40 @@ public class UserController extends BaseController {
      */
     @RequestMapping(value = "/userAdd", method = RequestMethod.POST)
     public void userAdd(HttpServletRequest httpRequest, HttpServletResponse httpResponse,UserModel model) throws IOException {
+        AjaxResult result = new AjaxResult();
         if(model.getId()==null || model.getId().equals("")) {
             model.setId(Utils.getUUID());
             model.setCreateBy(LoginUser.getCurrentUser(httpRequest).getId());
             model.setCreateTime(new Date());
             getUserService().insert(model);
+            result.setMsg("添加成功");
         }
         else {
             getUserService().update(model);
+            result.setMsg("更新成功");
         }
-        httpResponse.sendRedirect("/user/userList");
+        result.setIsOk(true);
+        result.setData("/user/userList");
+        reponseWrite(httpResponse,result);
+    }
+    /**
+     * 用户删除
+     *
+     * @return
+     */
+    @RequestMapping(value = "/userDelete/{id}", method = RequestMethod.POST)
+    public void userDelete(HttpServletResponse httpResponse, @PathVariable("id") String id) throws IOException {
+        AjaxResult result = new AjaxResult();
+        if(getUserService().delete(UserModel.class,"ID",id)) {
+            result.setIsOk(true);
+            result.setMsg("删除成功");
+        }
+        else {
+            result.setIsOk(false);
+            result.setMsg("删除失败");
+        }
+        result.setData("/user/userList");
+        reponseWrite(httpResponse, result);
     }
 
     /**
@@ -156,14 +183,40 @@ public class UserController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/roleAdd", method = RequestMethod.POST)
-    public void roleAdd(HttpServletRequest httpRequest, HttpServletResponse httpResponse,RoleModel model) throws IOException {
-        if(model.getId()==null || model.getId().equals("")) {
+    public void roleAdd(HttpServletResponse httpResponse, RoleModel model) throws IOException {
+        AjaxResult result = new AjaxResult();
+        if (model.getId() == null || model.getId().equals("")) {
             model.setId(Utils.getUUID());
             getUserService().insert(model);
+            result.setMsg("添加成功");
+
+        } else {
+            getUserService().update(model);
+            result.setMsg("更新成功");
+        }
+        result.setIsOk(true);
+        result.setData("/user/roleList");
+        reponseWrite(httpResponse,result);
+    }
+    /**
+     * 角色删除
+     *
+     * @return
+     */
+    @RequestMapping(value = "/roleDelete/{id}", method = RequestMethod.POST)
+    public void roleDelete(HttpServletResponse httpResponse, @PathVariable("id") String id) throws IOException {
+        AjaxResult result = new AjaxResult();
+        if(getUserService().delete(RoleModel.class,"ID",id)) {
+            result.setIsOk(true);
+            result.setMsg("删除成功");
         }
         else {
-            getUserService().update(model);
+            result.setIsOk(false);
+            result.setMsg("删除失败");
         }
-        httpResponse.sendRedirect("/user/roleList");
+        result.setData("/user/roleList");
+        reponseWrite(httpResponse, result);
     }
 }
+
+

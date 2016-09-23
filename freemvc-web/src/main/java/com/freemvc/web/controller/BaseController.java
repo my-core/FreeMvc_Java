@@ -2,12 +2,16 @@ package com.freemvc.web.controller;
 
 import com.freemvc.common.Log4jHelper;
 import com.freemvc.iservice.IUserService;
+import com.freemvc.web.common.AjaxResult;
+import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * Created by yangliangbin on 2016/9/2.
@@ -30,4 +34,18 @@ public class BaseController {
         this.userService = userService;
     }
 
+    /**
+     * 输出Ajax响应
+     * @param httpResponse
+     * @param result
+     * @throws IOException
+     */
+    public  void reponseWrite(HttpServletResponse httpResponse, AjaxResult result)throws IOException {
+        JSONObject json=new JSONObject();
+        json.put("isOk",result.getIsOk());
+        json.put("msg",result.getMsg());
+        json.put("data",result.getData());
+        httpResponse.setCharacterEncoding("UTF-8");
+        httpResponse.getWriter().print(json.toString());
+    }
 }

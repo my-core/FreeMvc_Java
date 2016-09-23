@@ -55,7 +55,7 @@
                     <tr>
                         <th></th>
                         <td>
-                            <button type="submit" class="btn btn-primary">保 存</button>
+                            <button type="button" class="btn btn-primary" onclick="addRole()">保 存</button>
                             <a href="/user/roleList" class="btn btn-success">返回列表</a>
                         </td>
                     </tr>
@@ -64,8 +64,9 @@
         </div>
     </form>
     <script>
+        var validator;
         $(function () {
-            $("#RoleAdd").validate({
+            validator= $("#RoleAdd").validate({
                 rules: {
                     Name: {
                         required: true
@@ -76,6 +77,12 @@
                 }
             });
         });
+        function addRole() {
+            if (validator.form()) {
+                DoAjax('/user/roleAdd', $('#RoleAdd').serialize());
+            }
+        }
+
     </script>
 </body>
 </html>

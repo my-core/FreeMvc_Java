@@ -48,9 +48,8 @@ public class ObjectHelper {
         Field[] fields = o.getClass().getDeclaredFields();
         String[] fieldNames = new String[fields.length];
         List list = new ArrayList();
-        Map infoMap = null;
         for (int i = 0; i < fields.length; i++) {
-            infoMap = new HashMap();
+            Map infoMap = new HashMap();
             infoMap.put("type", fields[i].getType().toString());
             infoMap.put("name", fields[i].getName());
             infoMap.put("value", getFieldValueByName(fields[i].getName(), o));

@@ -31,7 +31,7 @@ public class HomeController extends BaseController {
     public ModelAndView index(HttpServletRequest request) {
 
         List<PermissionModel> list = null;
-        UserModel userModel = LoginUser.getCurrentUser(request);
+        UserModel userModel = LoginUser.getCurrentUser();
         StringBuffer sb = new StringBuffer();
         if (userModel != null) {
             //admin最高权限

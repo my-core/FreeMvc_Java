@@ -2,7 +2,6 @@ package com.freemvc.service;
 
 import com.freemvc.idao.IBaseDao;
 import com.freemvc.iservice.IBaseService;
-import com.mysql.cj.api.x.Column;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -20,12 +19,11 @@ public class BaseService implements  IBaseService {
     @Resource()
     private IBaseDao baseDao;
 
+
     /**
      * 构造函数
      */
     public BaseService() {
-        /*这里暂时使用new实例化，后期使用spring的ioc进行注入*/
-        //baseDao = new BaseDao();
     }
 
     /**

@@ -34,7 +34,7 @@ public class UserDao extends BaseDao implements IUserDao {
             sb.append("where 1=1 ");
             String userName = request.getUserName();
             if (userName != null && userName.length() != 0) {
-                sb.append("UserName=? ");
+                sb.append("and UserName=? ");
                 params.add(userName);
             }
             sb.append("order by a.CreateTime desc ");

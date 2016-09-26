@@ -6,11 +6,7 @@ import com.freemvc.datacontract.response.*;
 import com.freemvc.idao.IUserDao;
 import com.freemvc.iservice.IUserService;
 import com.freemvc.model.*;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import javax.annotation.Resource;
-import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.List;
 
 /**

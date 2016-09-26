@@ -20,7 +20,7 @@
     <!--初始化Servlet的参数，如不配置此节点，则默认从WEB-INF下找freemvc-servlet.xml文件-->
     <init-param>
       <param-name>contextConfigLocation</param-name>
-      <param-value>classpath:freemvc-servlet.xml, classpath:ioc.xml</param-value>
+      <param-value>classpath:freemvc-servlet.xml, classpath:spring-ioc.xml</param-value>
     </init-param>
   </servlet>
   <servlet-mapping>

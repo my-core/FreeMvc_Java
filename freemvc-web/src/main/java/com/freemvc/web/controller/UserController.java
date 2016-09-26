@@ -3,19 +3,14 @@ package com.freemvc.web.controller;
 import com.freemvc.common.Utils;
 import com.freemvc.datacontract.request.*;
 import com.freemvc.datacontract.response.*;
-import com.freemvc.model.PermissionModel;
-import com.freemvc.model.RoleModel;
-import com.freemvc.model.UserModel;
+import com.freemvc.model.*;
 import com.freemvc.web.common.AjaxResult;
 import com.freemvc.web.common.LoginUser;
-import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.jws.WebParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -30,12 +25,13 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserController extends BaseController {
 
+    //region ==============登录相关==================
     /**
      * 用户登录
      */
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public ModelAndView login(HttpServletRequest request) {
-        LoginUser.setCurrentUser(request, null);
+    public ModelAndView login() {
+        LoginUser.setCurrentUser( null);
         ModelAndView mv = new ModelAndView("login");
         return mv;
     }
@@ -43,15 +39,14 @@ public class UserController extends BaseController {
     /**
      * 用户登录
      *
-     * @param httpRequest
      * @return
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ModelAndView login(HttpServletRequest httpRequest, HttpServletResponse httpResponse, UserLoginRequest loginRequest) throws IOException {
+    public ModelAndView login(HttpServletResponse httpResponse, UserLoginRequest loginRequest) throws IOException {
         BaseResponse<UserModel> logResponse = getUserService().userLogin(loginRequest);
         ModelAndView mv = null;
         if (logResponse.isOk()) {
-            LoginUser.setCurrentUser(httpRequest, logResponse.getReturnData());
+            LoginUser.setCurrentUser(logResponse.getReturnData());
             httpResponse.sendRedirect("/");
         } else {
             mv = new ModelAndView("login");
@@ -59,7 +54,9 @@ public class UserController extends BaseController {
         }
         return mv;
     }
+    //endregion
 
+    //region ========用户查询、添加、删除、修改========
     /**
      * 用户列表
      *
@@ -94,16 +91,20 @@ public class UserController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/userAdd", method = RequestMethod.POST)
-    public void userAdd(HttpServletRequest httpRequest, HttpServletResponse httpResponse,UserModel model) throws IOException {
+    public void userAdd( HttpServletResponse httpResponse,UserModel model) throws IOException {
         AjaxResult result = new AjaxResult();
         if(model.getId()==null || model.getId().equals("")) {
             model.setId(Utils.getUUID());
-            model.setCreateBy(LoginUser.getCurrentUser(httpRequest).getId());
+            model.setCreateBy(LoginUser.getCurrentUser().getId());
             model.setCreateTime(new Date());
             getUserService().insert(model);
             result.setMsg("添加成功");
         }
         else {
+            UserModel userModel = getUserService().getModel(UserModel.class, "ID", model.getId());
+            if(model.getPassword().equals("")){
+                model.setPassword(userModel.getPassword());
+            }
             getUserService().update(model);
             result.setMsg("更新成功");
         }
@@ -130,7 +131,9 @@ public class UserController extends BaseController {
         result.setData("/user/userList");
         reponseWrite(httpResponse, result);
     }
+    //endregion==
 
+    //region ========权限查询、添加、删除、修改========
     /**
      * 权限列表
      *
@@ -139,6 +142,7 @@ public class UserController extends BaseController {
     @RequestMapping(value = "/permissionList", method = RequestMethod.GET)
     public ModelAndView permissionList() {
         List<PermissionModel> list = getUserService().getPermissionList();
+
         for(PermissionModel item : list) {
             if (item.getType() == 2) {
                 item.setName("|----" + item.getName());
@@ -151,6 +155,44 @@ public class UserController extends BaseController {
         return mv;
     }
 
+    /**
+     * 权限添加
+     *
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = {"/permissionAdd/{id}"}, method = RequestMethod.GET)
+    public ModelAndView permissionAdd(@PathVariable("id") String id) {
+        PermissionModel model = getUserService().getModel(PermissionModel.class, "ID", id);
+        ModelAndView mv = new ModelAndView("permissionAdd");
+        mv.addObject("permission", model);
+        return mv;
+    }
+    /**
+     * 权限添加
+     *
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/permissionAdd", method = RequestMethod.POST)
+    public void permissionAdd( HttpServletResponse httpResponse,PermissionModel model) throws IOException {
+        AjaxResult result = new AjaxResult();
+        if(model.getId()==null || model.getId().equals("")) {
+            model.setId(Utils.getUUID());
+            getUserService().insert(model);
+            result.setMsg("添加成功");
+        }
+        else {
+            getUserService().update(model);
+            result.setMsg("更新成功");
+        }
+        result.setIsOk(true);
+        result.setData("/user/userList");
+        reponseWrite(httpResponse,result);
+    }
+    //endregion
+
+    //region ========角色查询、添加、删除、修改========
     /**
      * 角色列表
      *
@@ -217,6 +259,7 @@ public class UserController extends BaseController {
         result.setData("/user/roleList");
         reponseWrite(httpResponse, result);
     }
+    //endregion
 }
 
 

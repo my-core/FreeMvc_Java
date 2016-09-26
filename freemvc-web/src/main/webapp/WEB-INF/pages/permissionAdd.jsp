@@ -1,3 +1,4 @@
+<%@ taglib prefix="s" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.sun.org.apache.bcel.internal.generic.DDIV" %><%--
   Created by IntelliJ IDEA.
   User: yangliangbin
@@ -30,50 +31,68 @@
     <![endif]-->
 </head>
 <body>
-    <form id="userAdd" action="/user/userAdd" method="post" commandName="user" role="form">
+    <form id="PermissionAdd" action="/user/permissionAdd" method="post" commandName="user" role="form">
         <div class="ibox">
             <div class="ibox-title">
-                <h5>用户添加/编辑</h5>
+                <h5>权限添加/编辑</h5>
             </div>
             <div class="ibox-content">
-                <input id="id" name="id" value="${user.id}" type="hidden" >
+                <input id="id" name="id" value="${role.id}" type="hidden" >
                 <!--form-horizontal:水平排列的表单-->
                 <table class="form form-horizontal">
                     <tr>
-                        <th style="width: 150px;">用户名：</th>
+                        <th style="width: 150px;">父节点：</th>
                         <td>
-                            <input id="UserName" name="UserName" type="text" value="${user.userName}" class="form-control" required="required">
+                            <select id="ParentID" name="ParentID" class="form-control">
+                                <option value="">根节点</option>
+                            </select>
                         </td>
                     </tr>
                     <tr>
-                        <th>登录密码：</th>
+                        <th>类别：</th>
                         <td>
-                            <input id="Password" name="Password" type="password" value="" class="form-control" required="required">
+                            <select id="" name="Type" class="form-control">
+                                <option value="1" ${permission.type=="1"?"selected=\"selected\"":""}>模块</option>
+                                <option value="2" ${permission.type=="2"?"selected=\"selected\"":""}>主菜单</option>
+                                <option value="3" ${permission.type=="3"?"selected=\"selected\"":""}>工具栏</option>
+                            </select>
                         </td>
                     </tr>
                     <tr>
-                        <th>确认密码：</th>
+                        <th>权限名：</th>
                         <td>
-                            <input id="Password0" name="Password0" type="password" value="" class="form-control" required="required">
+                            <input id="Name" name="Name" type="text" value="${permission.name}" class="form-control" required="required">
                         </td>
                     </tr>
                     <tr>
-                        <th>姓名：</th>
+                        <th>权限编码：</th>
                         <td>
-                            <input id="Name" name="Name" type="text" value="${user.name}" class="form-control" required="required">
+                            <input id="Code" name="Code" type="text" value="${permission.code}" class="form-control" required="required">
                         </td>
                     </tr>
                     <tr>
-                        <th>所属角色:</th>
+                        <th>Icon图标：</th>
                         <td>
-
+                            <input id="Icon" name="Icon" type="text" value="${permission.icon}" class="form-control" >
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Url地址：</th>
+                        <td>
+                            <input id="Url" name="Url" type="text" value="${permission.url}" class="form-control" >
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>排序号：</th>
+                        <td>
+                            <input id="Sort" name="Sort" type="text" value="${permission.sort}" class="form-control" >
                         </td>
                     </tr>
                     <tr>
                         <th></th>
                         <td>
-                            <button type="button" class="btn btn-primary" onclick="addUser()">保 存</button>
-                            <a href="/user/userList" class="btn btn-success">返回列表</a>
+                            <button type="button" class="btn btn-primary" onclick="addPermission()">保 存</button>
+                            <a href="/user/permissionList" class="btn btn-success">返回列表</a>
                         </td>
                     </tr>
                 </table>
@@ -83,42 +102,27 @@
     <script>
         var validator;
         $(function () {
-            validator =  $("#userAdd").validate({
+            validator=$("#PermissionAdd").validate({
                 rules: {
-                    UserName: "required",
-                    Password: {
-                        required: true,
-                        minlength: 3
-                    },
-                    Password0: {
-                        required: true,
-                        minlength: 3,
-                        equalTo: "#Password"
-                    },
                     Name: {
+                        required: true
+                    },
+                    Code: {
                         required: true
                     }
                 },
                 messages: {
-                    UserName: "请输入用户名",
-                    Password: {
-                        required: "请输入登录密码",
-                        minlength: $.validator.format("密码不能小于{0}个字 符")
-                    },
-                    Password0: {
-                        required: "请输入确认密码",
-                        minlength: "确认密码不能小于3个字符",
-                        equalTo: "两次输入密码不一致不一致"
-                    },
-                    Name: "请输入姓名"
+                    Name: "请输入权限名",
+                    Code: "请输入权限编码",
                 }
             });
         });
-        function addUser() {
+        function addPermission() {
             if (validator.form()) {
-                DoAjax('/user/roleAdd', $('#userAdd').serialize());
+                DoAjax('/user/permissionAdd', $('#PermissionAdd').serialize());
             }
         }
+
     </script>
 </body>
 </html>

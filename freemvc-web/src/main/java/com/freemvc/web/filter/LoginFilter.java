@@ -19,7 +19,7 @@ public class LoginFilter implements Filter {
         HttpServletRequest httpRequest = (HttpServletRequest) servletRequest;
         HttpServletResponse httpResponse = (HttpServletResponse) servletResponse;
 
-        UserModel userModel= LoginUser.getCurrentUser(httpRequest);
+        UserModel userModel= LoginUser.getCurrentUser();
         if(userModel==null){
             httpResponse.sendRedirect("/user/login");
         }

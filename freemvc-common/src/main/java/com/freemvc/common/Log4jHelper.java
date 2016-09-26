@@ -11,15 +11,12 @@ public class Log4jHelper {
     /**
      * 日志记录器对象
      */
-    //private static Logger log;
     private static Log log;
 
     /**
      * 静态构造函数
      */
     static {
-        //BasicConfigurator.configure();
-        //log = Logger.getLogger(com.freemvc.common.Log4jHelper.class);
         log = LogFactory.getLog(Log4jHelper.class);
     }
 

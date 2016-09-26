@@ -24,7 +24,22 @@
         </dependency>
         <dependency>
             <groupId>com.freemvc</groupId>
-            <artifactId>com.freemvc.web</artifactId>
+            <artifactId>com.freemvc.service</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.freemvc</groupId>
+            <artifactId>com.freemvc.dao</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.freemvc</groupId>
+            <artifactId>com.freemvc.common</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.freemvc</groupId>
+            <artifactId>com.freemvc.datacontract</artifactId>
             <version>1.0</version>
         </dependency>
     </dependencies>

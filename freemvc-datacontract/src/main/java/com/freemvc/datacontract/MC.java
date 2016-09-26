@@ -5,6 +5,7 @@ import java.util.Map;
 
 /**
  * Created by yangliangbin on 2016/9/13.
+ * MessageCode
  */
 public class MC {
     /**

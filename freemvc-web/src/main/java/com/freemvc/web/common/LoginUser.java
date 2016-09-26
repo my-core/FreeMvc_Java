@@ -18,8 +18,8 @@ public class LoginUser {
      *
      * @return
      */
-    public static UserModel getCurrentUser(HttpServletRequest request) {
-        Object obj = WebUtils.getSession(request,"LoginUser");
+    public static UserModel getCurrentUser() {
+        Object obj = WebUtils.getSession("LoginUser");
         if (obj != null)
             return (UserModel) obj;
         return null;
@@ -30,10 +30,10 @@ public class LoginUser {
      *
      * @param model
      */
-    public static void setCurrentUser(HttpServletRequest request, UserModel model) {
+    public static void setCurrentUser( UserModel model) {
         if (model == null)
-            WebUtils.delSession(request,"LoginUser");
+            WebUtils.delSession("LoginUser");
         else
-            WebUtils.setSession(request,"LoginUser", model);
+            WebUtils.setSession("LoginUser", model);
     }
 }

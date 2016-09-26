@@ -18,7 +18,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        UserModel userModel= LoginUser.getCurrentUser(request);
+        UserModel userModel= LoginUser.getCurrentUser();
         if(userModel==null){
             response.sendRedirect("/user/login");
         }

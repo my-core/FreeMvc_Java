@@ -13,9 +13,20 @@
           <element id="archive" name="com.freemvc.common-1.0.jar">
             <element id="module-output" name="freemvc-common" />
           </element>
-          <element id="archive" name="com.freemvc.web-1.0.jar">
-            <element id="module-output" name="freemvc-web" />
-          </element>
+          <element id="library" level="project" name="Maven: org.springframework:spring-core:4.3.2.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-context:4.3.2.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-jdbc:4.3.2.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-webmvc:4.3.2.RELEASE" />
+          <element id="library" level="project" name="Maven: javax.servlet:jstl:1.2" />
+          <element id="library" level="project" name="Maven: mysql:mysql-connector-java:6.0.3" />
+          <element id="library" level="project" name="Maven: com.mchange:c3p0:0.9.5.2" />
+          <element id="library" level="project" name="Maven: log4j:log4j:1.2.17" />
+          <element id="library" level="project" name="Maven: org.json:json:20160810" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-core:2.8.0" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.8.0" />
+          <element id="library" level="project" name="Maven: com.mangofactory:swagger-springmvc:1.0.2" />
+          <element id="library" level="project" name="Maven: org.mybatis:mybatis:3.4.1" />
+          <element id="library" level="project" name="Maven: org.mybatis:mybatis-spring:1.3.0" />
           <element id="archive" name="com.freemvc.service-1.0.jar">
             <element id="module-output" name="freemvc-service" />
           </element>
@@ -25,26 +36,14 @@
           <element id="archive" name="com.freemvc.dao-1.0.jar">
             <element id="module-output" name="freemvc-dao" />
           </element>
-          <element id="library" level="project" name="Maven: org.springframework:spring-core:4.3.2.RELEASE" />
           <element id="library" level="project" name="Maven: commons-logging:commons-logging:1.2" />
-          <element id="library" level="project" name="Maven: org.springframework:spring-context:4.3.2.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-aop:4.3.2.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-beans:4.3.2.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-expression:4.3.2.RELEASE" />
-          <element id="library" level="project" name="Maven: org.springframework:spring-jdbc:4.3.2.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-tx:4.3.2.RELEASE" />
-          <element id="library" level="project" name="Maven: org.springframework:spring-webmvc:4.3.2.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-web:4.3.2.RELEASE" />
-          <element id="library" level="project" name="Maven: javax.servlet:jstl:1.2" />
-          <element id="library" level="project" name="Maven: mysql:mysql-connector-java:6.0.3" />
-          <element id="library" level="project" name="Maven: com.mchange:c3p0:0.9.5.2" />
           <element id="library" level="project" name="Maven: com.mchange:mchange-commons-java:0.2.11" />
-          <element id="library" level="project" name="Maven: log4j:log4j:1.2.17" />
-          <element id="library" level="project" name="Maven: org.json:json:20160810" />
-          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-core:2.8.0" />
-          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.8.0" />
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.8.0" />
-          <element id="library" level="project" name="Maven: com.mangofactory:swagger-springmvc:1.0.2" />
           <element id="library" level="project" name="Maven: com.wordnik:swagger-annotations:1.3.11" />
           <element id="library" level="project" name="Maven: com.google.guava:guava:15.0" />
           <element id="library" level="project" name="Maven: com.fasterxml:classmate:1.1.0" />
